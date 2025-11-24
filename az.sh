@@ -1,23 +1,17 @@
-# alt-z: A smarter cd command
+# az: A smarter cd command (Shell Integration)
 # Integration script for Bash and Zsh
 
-# Resolve the directory where this script resides (when sourced)
-if [ -n "$BASH_SOURCE" ]; then
-    _ALT_Z_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-elif [ -n "$ZSH_VERSION" ]; then
-    _ALT_Z_DIR=$(cd "$(dirname "${(%):-%x}")" && pwd)
-else
-    _ALT_Z_DIR=$(cd "$(dirname "$0")" && pwd)
-fi
+# Assumes 'alt-z' command is available in PATH.
+# You can override the command by setting _ALT_Z_CMD
+: "${_ALT_Z_CMD:=alt-z}"
 
-_alt_z_python_script() {
-    # Absolute path to main.py
-    python3 "$_ALT_Z_DIR/python/src/main.py" "$@"
+_call_alt_z() {
+    command "$_ALT_Z_CMD" "$@"
 }
 
-alt-z() {
+az() {
     if [ "$#" -eq 0 ]; then
-        _alt_z_python_script --help
+        _call_alt_z --help
         return
     fi
 
@@ -25,7 +19,7 @@ alt-z() {
     
     # Direct pass-through for non-query commands
     if [[ "$subcmd" == "add" || "$subcmd" == "clean" ]]; then
-        _alt_z_python_script "$@"
+        _call_alt_z "$@"
         return
     fi
     
@@ -47,7 +41,7 @@ alt-z() {
     
     if $cd_mode; then
         local target
-        target=$(_alt_z_python_script "${args[@]}")
+        target=$(_call_alt_z "${args[@]}")
         local ret=$?
         if [ $ret -eq 0 ] && [ -n "$target" ]; then
             if [ -d "$target" ]; then
@@ -59,30 +53,30 @@ alt-z() {
             return $ret
         fi
     else
-        _alt_z_python_script "${args[@]}"
+        _call_alt_z "${args[@]}"
     fi
 }
 
 # Hook configuration
 if [ -n "$BASH_VERSION" ]; then
     # Bash hook
-    _alt_z_hook() {
-        _alt_z_python_script add "$PWD"
+    _az_hook() {
+        _call_alt_z add "$PWD"
     }
     
     # Append to PROMPT_COMMAND
-    if [[ "$PROMPT_COMMAND" != *"_alt_z_hook"* ]]; then
-        PROMPT_COMMAND="_alt_z_hook${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
+    if [[ "$PROMPT_COMMAND" != *"_az_hook"* ]]; then
+        PROMPT_COMMAND="_az_hook${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
     fi
     
 elif [ -n "$ZSH_VERSION" ]; then
     # Zsh hook
-    _alt_z_hook() {
-        _alt_z_python_script add "$PWD"
+    _az_hook() {
+        _call_alt_z add "$PWD"
     }
     
     typeset -ga precmd_functions
-    if [[ ${precmd_functions[(I)_alt_z_hook]} -eq 0 ]]; then
-        precmd_functions+=_alt_z_hook
+    if [[ ${precmd_functions[(I)_az_hook]} -eq 0 ]]; then
+        precmd_functions+=_az_hook
     fi
 fi
