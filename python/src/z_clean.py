@@ -3,11 +3,12 @@ import os
 import argparse
 from common import read_data, write_data
 
-def main():
-    parser = argparse.ArgumentParser(description='z cleanup tool')
+def register(subparsers):
+    parser = subparsers.add_parser('clean', help='cleanup the database')
     parser.add_argument('-x', action='store_true', help='remove the current directory from the datafile')
-    args = parser.parse_args()
-    
+    parser.set_defaults(func=run)
+
+def run(args):
     entries = read_data()
     new_entries = []
     
@@ -22,5 +23,3 @@ def main():
             
     write_data(new_entries)
 
-if __name__ == "__main__":
-    main()

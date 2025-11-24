@@ -17,8 +17,9 @@ def test_integration():
     env["_Z_DATA"] = data_file
     
     src_dir = os.path.abspath("python/src")
-    z_add = f"python3 {src_dir}/z_add.py"
-    z_query = f"python3 {src_dir}/z_query.py"
+    main_py = f"python3 {src_dir}/main.py"
+    z_add = f"{main_py} add"
+    z_query = f"{main_py} query"
     
     print(f"Testing with data file: {data_file}")
     

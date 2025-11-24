@@ -3,20 +3,25 @@ import time
 import os
 from common import read_data, write_data, Entry, MAX_SCORE, EXCLUDE_DIRS
 
-def main():
-    args = sys.argv[1:]
+def register(subparsers):
+    parser = subparsers.add_parser('add', help='add a directory to the database')
+    parser.add_argument('path', nargs='*', help='path to add')
+    parser.set_defaults(func=run)
+
+def run(args):
+    path_parts = args.path
     path = ""
     
     # Handle --add flag if passed (compatibility with original z.sh call)
-    if len(args) > 0 and args[0] == "--add":
-        args.pop(0)
-        
-    if len(args) > 0:
-        path = " ".join(args)
+    # Since we are using argparse now, --add might be treated as a path if not careful, 
+    # but since this is a subcommand 'add', the user would call `alt-z add path`.
+    # If the user calls `alt-z add --add path`, argparse might complain if --add isn't defined.
+    # However, we can assume the caller (shell script) will be updated to call `alt-z add path`.
     
-    # If no argument, try reading from stdin? 
-    # Original z.sh calls `_z --add "${PWD:a}"`. 
-    # Our architecture doc says "Argument or Stdin".
+    if path_parts:
+        path = " ".join(path_parts)
+    
+    # If no argument, try reading from stdin
     if not path and not sys.stdin.isatty():
         path = sys.stdin.read().strip()
         
@@ -62,5 +67,3 @@ def main():
 
     write_data(entries)
 
-if __name__ == "__main__":
-    main()
