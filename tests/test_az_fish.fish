@@ -5,11 +5,11 @@
 set -x _Z_DATA (mktemp)
 echo "Using temp data file: $_Z_DATA"
 
-# Add bin to PATH so alt-z command is found
-set -x PATH $PWD/bin $PATH
+# Add Rust binary to PATH
+set -x PATH $PWD/rust/target/release $PATH
 
 # Source az.fish
-source ./az.fish
+source ./shell/az.fish
 
 # 1. Add some paths
 echo "Adding paths..."

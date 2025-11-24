@@ -1,2 +1,29 @@
+# Rust
+rust/target/
+rust/Cargo.lock
+
+# Test artifacts
+tests/*.tmp
+tests/.z
+.z
+
+# Benchmark data
+bench/*.z
+bench/tmp/
+
+# Build artifacts
+*.o
+*.so
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
 __pycache__
-target

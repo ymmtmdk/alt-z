@@ -5,11 +5,11 @@
 export _Z_DATA=$(mktemp)
 echo "Using temp data file: $_Z_DATA"
 
-# Add bin to PATH so alt-z command is found
-export PATH=$PWD/bin:$PATH
+# Add Rust binary to PATH
+export PATH=$PWD/rust/target/release:$PATH
 
 # Source az.sh
-source ./az.sh
+source ./shell/az.sh
 
 # 1. Add some paths
 echo "Adding paths..."

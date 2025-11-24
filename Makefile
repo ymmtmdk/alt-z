@@ -29,8 +29,8 @@ clean:
 # Run tests
 test:
 	cd rust && $(CARGO) test
-	bash test_az_sh.sh
-	fish test_az_fish.fish
+	bash tests/test_az_sh.sh
+	fish tests/test_az_fish.fish
 
 # Install alt-z
 install: release
@@ -38,8 +38,8 @@ install: release
 	$(MKDIR) $(DESTDIR)$(BINDIR)
 	$(MKDIR) $(DESTDIR)$(SHAREDIR)
 	$(INSTALL) -m 755 rust/target/release/alt-z $(DESTDIR)$(BINDIR)/alt-z
-	$(INSTALL) -m 644 az.sh $(DESTDIR)$(SHAREDIR)/az.sh
-	$(INSTALL) -m 644 az.fish $(DESTDIR)$(SHAREDIR)/az.fish
+	$(INSTALL) -m 644 shell/az.sh $(DESTDIR)$(SHAREDIR)/az.sh
+	$(INSTALL) -m 644 shell/az.fish $(DESTDIR)$(SHAREDIR)/az.fish
 	@echo ""
 	@echo "=========================================="
 	@echo "alt-z has been installed successfully!"
