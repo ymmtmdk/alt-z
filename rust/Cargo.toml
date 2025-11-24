@@ -1,0 +1,14 @@
+[package]
+name = "alt-z"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+csv = "1"
+fs2 = "0.4"
+anyhow = "1"
+chrono = "0.4"
+regex = "1"
+shellexpand = "2"
