@@ -62,3 +62,22 @@ end
 function _az_hook --on-variable PWD
     $_ALT_Z_CMD add $PWD
 end
+
+# Command-not-found handler: fallback to az
+function fish_command_not_found
+    set -l cmd $argv[1]
+    
+    # Try to query az with the command name
+    set -l target ($_ALT_Z_CMD query -e $cmd 2>/dev/null)
+    set -l ret $status
+    
+    if test $ret -eq 0; and test -n "$target"; and test -d "$target"
+        # Found a matching directory, cd to it
+        echo "az: jumping to $target" >&2
+        cd "$target"
+    else
+        # No match found, show standard error
+        echo "fish: Unknown command: $cmd" >&2
+        return 127
+    end
+end
