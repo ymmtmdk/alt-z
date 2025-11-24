@@ -45,6 +45,21 @@ install: release
 	@echo "alt-z has been installed successfully!"
 	@echo "=========================================="
 	@echo ""
+	@# Check if BINDIR is in PATH
+	@if echo "$$PATH" | grep -q "$(BINDIR)"; then \
+		echo "✓ $(BINDIR) is in your PATH"; \
+	else \
+		echo "⚠ WARNING: $(BINDIR) is NOT in your PATH!"; \
+		echo ""; \
+		echo "To use alt-z, add the following to your shell configuration:"; \
+		echo ""; \
+		echo "  Bash/Zsh (~/.bashrc or ~/.zshrc):"; \
+		echo "    export PATH=\"$(BINDIR):\$$PATH\""; \
+		echo ""; \
+		echo "  Fish (~/.config/fish/config.fish):"; \
+		echo "    set -x PATH $(BINDIR) \$$PATH"; \
+		echo ""; \
+	fi
 	@echo "To enable shell integration, add the following to your shell configuration:"
 	@echo ""
 	@echo "  Bash (~/.bashrc):"
