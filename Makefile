@@ -1,6 +1,6 @@
 # Makefile for alt-z
 
-PREFIX ?= /usr/local
+PREFIX ?= $(HOME)/.local
 BINDIR = $(PREFIX)/bin
 SHAREDIR = $(PREFIX)/share/alt-z
 
@@ -95,9 +95,10 @@ help:
 	@echo "  make help         Show this help message"
 	@echo ""
 	@echo "Variables:"
-	@echo "  PREFIX            Installation prefix (default: /usr/local)"
+	@echo "  PREFIX            Installation prefix (default: ~/.local)"
 	@echo "  DESTDIR           Staging directory for package builds"
 	@echo ""
 	@echo "Examples:"
+	@echo "  make install"
+	@echo "  make install PREFIX=/usr/local"
 	@echo "  make install PREFIX=/usr"
-	@echo "  make install PREFIX=~/.local"
