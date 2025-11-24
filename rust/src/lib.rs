@@ -71,7 +71,7 @@ pub fn frecency(rank: f64, ts: i64, now: i64) -> f64 {
 }
 
 pub fn aging(entries: &mut Vec<Entry>) {
-    let mut total_rank: f64 = entries.iter().map(|e| e.rank).sum();
+    let total_rank: f64 = entries.iter().map(|e| e.rank).sum();
     if total_rank > MAX_SCORE {
         for entry in entries.iter_mut() {
             entry.rank *= 0.99;

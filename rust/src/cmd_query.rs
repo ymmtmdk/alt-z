@@ -3,7 +3,7 @@ use std::env;
 use std::path::PathBuf;
 use regex::Regex;
 
-use crate::lib::{self, Entry, read_data, frecency};
+use crate::lib::{self, Entry, read_data};
 
 pub fn run(args: Vec<String>) -> Result<()> {
     // Parse flags and patterns
@@ -32,7 +32,7 @@ pub fn run(args: Vec<String>) -> Result<()> {
     let now = lib::current_timestamp();
 
     // Filter entries by regex patterns (AND semantics)
-    let mut matches: Vec<&Entry> = entries.iter().filter(|e| {
+    let matches: Vec<&Entry> = entries.iter().filter(|e| {
         for pat in &patterns {
             let re = Regex::new(pat).unwrap_or_else(|_| Regex::new(&regex::escape(pat)).unwrap());
             if !re.is_match(&e.path) {

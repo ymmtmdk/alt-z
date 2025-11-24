@@ -1,8 +1,8 @@
-use anyhow::{Context, Result};
+use anyhow::Result;
 use std::env;
 use std::path::PathBuf;
 
-use crate::lib::{self, Entry, read_data, write_data, get_exclude_dirs};
+use crate::lib::{read_data, write_data};
 
 pub fn run(args: Vec<String>) -> Result<()> {
     // args may contain "-x" to remove current directory

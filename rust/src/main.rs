@@ -1,3 +1,5 @@
+#![allow(special_module_name)]
+
 use clap::{Parser, Subcommand};
 use anyhow::Result;
 
