@@ -69,6 +69,10 @@ if [ -n "$BASH_VERSION" ]; then
         PROMPT_COMMAND="_az_hook${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
     fi
     
+    # Note: Bash's command_not_found_handle runs in a subshell, so cd doesn't work.
+    # Users can manually use: az <directory-name> for jumping.
+    # For automatic fallback, consider using Fish shell which supports this natively.
+    
 elif [ -n "$ZSH_VERSION" ]; then
     # Zsh hook
     _az_hook() {
@@ -79,4 +83,8 @@ elif [ -n "$ZSH_VERSION" ]; then
     if [[ ${precmd_functions[(I)_az_hook]} -eq 0 ]]; then
         precmd_functions+=_az_hook
     fi
+    
+    # Note: Zsh's command_not_found_handler also has limitations with cd.
+    # Users can manually use: az <directory-name> for jumping.
+    # For automatic fallback, consider using Fish shell which supports this natively.
 fi

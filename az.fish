@@ -73,7 +73,7 @@ function fish_command_not_found
     
     if test $ret -eq 0; and test -n "$target"; and test -d "$target"
         # Found a matching directory, cd to it
-        echo "az: jumping to $target" >&2
+        echo "jumping to $target" >&2
         cd "$target"
     else
         # No match found, show standard error
