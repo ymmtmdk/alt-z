@@ -138,6 +138,46 @@ make test
 make clean
 ```
 
+## テスト
+
+プロジェクトには、サポートされているすべてのシェル用の包括的なテストスイートが含まれています：
+
+```bash
+# すべてのテストを実行
+make test
+
+# 個別のシェルテストを実行
+bash tests/test_az_sh.sh           # Bash/Zsh統合テスト
+fish tests/test_az_fish.fish       # Fish統合テスト
+
+# コマンド未検出フォールバックのテスト（Fish専用）
+fish tests/test_az_fish_fallback.fish
+```
+
+テストカバレッジ：
+- ディレクトリの追加と追跡
+- クエリ機能（エコーモード、cdモード、明示的クエリ）
+- パターンマッチングとスコアリング
+- シェル統合フック
+- Fishコマンド未検出フォールバック
+
+## ベンチマーク
+
+オリジナルのz実装と比較するためのパフォーマンスベンチマークが利用可能です：
+
+```bash
+# テストデータ生成（1000エントリ）
+python3 bench/benchmark_gen_data.py 1000
+
+# ベンチマーク比較を実行
+python3 bench/run_benchmark.py
+
+# 手動ベンチマーク
+bash bench/benchmark_runner.sh new query 1000 /tmp/.z
+```
+
+Rust実装は、特に大規模なデータセットにおいて、オリジナルのシェルスクリプト実装と比較して大幅なパフォーマンス向上を示しています。
+
 ## アンインストール
 
 ```bash

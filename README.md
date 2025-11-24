@@ -138,6 +138,46 @@ make test
 make clean
 ```
 
+## Testing
+
+The project includes comprehensive test suites for all supported shells:
+
+```bash
+# Run all tests
+make test
+
+# Run individual shell tests
+bash tests/test_az_sh.sh           # Bash/Zsh integration tests
+fish tests/test_az_fish.fish       # Fish integration tests
+
+# Test command-not-found fallback (Fish only)
+fish tests/test_az_fish_fallback.fish
+```
+
+Test coverage includes:
+- Directory addition and tracking
+- Query functionality (echo mode, cd mode, explicit query)
+- Pattern matching and scoring
+- Shell integration hooks
+- Fish command-not-found fallback
+
+## Benchmarking
+
+Performance benchmarks are available to compare with the original z implementation:
+
+```bash
+# Generate test data (1000 entries)
+python3 bench/benchmark_gen_data.py 1000
+
+# Run benchmark comparison
+python3 bench/run_benchmark.py
+
+# Manual benchmark
+bash bench/benchmark_runner.sh new query 1000 /tmp/.z
+```
+
+The Rust implementation shows significant performance improvements over the original shell script implementation, especially for large datasets.
+
 ## Uninstall
 
 ```bash
